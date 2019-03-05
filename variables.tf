@@ -20,13 +20,13 @@ variable "vpc_route_ids" {
   default     = []
 }
 
-variable "tags" {
-  description = "Tags of the Transit Gateway."
-  default     = {}
+variable "vpc_routes_update" {
+  description = "Whether or not to update VPC routes. This value cannot be computed automatically from other variables in Terraform 0.11.X."
+  default     = true
 }
 
-variable "resource_share_tags" {
-  description = "Tags of the Resource Share for the Transit Gateway."
+variable "tags" {
+  description = "Tags of the Transit Gateway."
   default     = {}
 }
 
@@ -50,8 +50,8 @@ variable "resource_share_allow_external_principals" {
 }
 
 variable "route_attached_vpc_cidrs" {
-  description = "All the CIDRs of the attached VPCs to the Transit Gateway. These routes will be used to update the current VPC route tables, not the Transit Gateway route table itself."
-  default     = []
+  description = "All the CIDRs of the attached VPCs to the Transit Gateway. These routes will be used to update the current VPC route tables, not the Transit Gateway route table itself. Note: the default value solves the terrible Terraform variable preprocessing in 0.11.X, preventing conditions to work correctly when this variable is an empty list. To make sure routes are not updated with this dummy value, set vpc_routes_update=false."
+  default     = ["127.0.0.1/32"]
 }
 
 variable "resource_share_account_ids" {
@@ -66,6 +66,7 @@ variable "resource_share_create" {
 
 variable "resource_share_name" {
   description = "Name of the Resource Share for the Transit Gateway."
+  default     = ""
 }
 
 variable "resource_share_tags" {

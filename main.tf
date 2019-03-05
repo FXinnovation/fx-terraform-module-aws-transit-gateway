@@ -12,7 +12,7 @@ resource "aws_ec2_transit_gateway" "this" {
 }
 
 resource "aws_ec2_transit_gateway_vpc_attachment" "this" {
-  subnet_ids         = "${var.attachement_subnet_ids}"
+  subnet_ids         = ["${var.attachement_subnet_ids}"]
   transit_gateway_id = "${aws_ec2_transit_gateway.this.id}"
   vpc_id             = "${var.vpc_id}"
 
@@ -62,9 +62,9 @@ resource "aws_ram_resource_association" "this" {
 #####
 
 resource "aws_route" "this" {
-  count = "$length(local.vpc_route_ids) * length(var.route_attached_vpc_cidrs)}"
+  count = "${var.vpc_routes_update ? length(var.vpc_route_ids) * length(var.route_attached_vpc_cidrs) : 0}"
 
-  route_table_id         = "${element(var.vpc_route_ids, count.index % length(var.route_attached_vpc_cidrs))}"
+  route_table_id         = "${element(var.vpc_route_ids, count.index / length(var.route_attached_vpc_cidrs))}"
   destination_cidr_block = "${element(var.route_attached_vpc_cidrs, count.index % length(var.route_attached_vpc_cidrs))}"
   transit_gateway_id     = "${aws_ec2_transit_gateway.this.id}"
 }
