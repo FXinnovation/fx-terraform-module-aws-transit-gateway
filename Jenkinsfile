@@ -1,3 +1,4 @@
-franklinEmpireTerraform(
-  commandTargets:     ['examples/standard']
+fxTerraformWithUsernamePassword(
+  testEnvironmentCredentialId: 'itoa-application-awscollectors-awscred',
+  commandTargets:              ['examples/standard']
 )
