@@ -1,0 +1,3 @@
+franklinEmpireTerraform(
+  commandTargets:     ['examples/standard']
+)
