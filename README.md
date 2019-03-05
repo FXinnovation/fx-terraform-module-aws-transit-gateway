@@ -8,7 +8,7 @@ For more features and use case, make a PR.
 
 Note: the Transit Gateway share resource acceptance, the VPC attachment and route propagation for the **client account** is not implemented in this module.
 For the following reasons:
-- With AWS provider 1.59 automated resource acceptance is not available.
+- With AWS provider 1.59 automated Resource Share acceptance is not available.
 - With terraform 0.11.X, VPC attachment in client accounts is not idempotent and will raise an error on subsequent calls.
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
@@ -36,22 +36,12 @@ For the following reasons:
 
 | Name | Description |
 |------|-------------|
-| cidr\_block |  |
+| arn |  |
+| association\_default\_route\_table\_id |  |
 | id |  |
-| igw\_id |  |
-| nat\_public\_ips |  |
-| natgw\_ids |  |
-| private\_route\_table\_ids |  |
-| private\_subnets |  |
-| public\_route\_table\_ids |  |
-| public\_subnets |  |
-| sg\_web\_access\_id |  |
-| transit\_gateway\_arn |  |
-| transit\_gateway\_association\_default\_route\_table\_id |  |
-| transit\_gateway\_id |  |
-| transit\_gateway\_owner\_id |  |
-| transit\_gateway\_propagation\_default\_route\_table\_id |  |
-| transit\_gateway\_resource\_share\_id |  |
-| transit\_gateway\_vpc\_attachment\_id |  |
+| owner\_id |  |
+| propagation\_default\_route\_table\_id |  |
+| resource\_share\_id |  |
+| vpc\_attachment\_id |  |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
