@@ -11,6 +11,16 @@ variable "attachement_subnet_ids" {
   default     = []
 }
 
+variable "transit_gateway_create" {
+  description = "Whether or not to create the Transit Gateway."
+  default     = true
+}
+
+variable "vpc_attachement_create" {
+  description = "Whether or not to create the Transit Gateway VPC attachment."
+  default     = true
+}
+
 variable "vpc_id" {
   description = "Id of the VPC where to create the Transit Gateway."
 }

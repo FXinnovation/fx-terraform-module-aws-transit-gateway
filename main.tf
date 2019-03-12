@@ -3,6 +3,8 @@
 #####
 
 resource "aws_ec2_transit_gateway" "this" {
+  count = "${var.transit_gateway_create}"
+
   description                     = "${var.description}"
   auto_accept_shared_attachments  = "enable"
   default_route_table_association = "enable"
@@ -12,6 +14,8 @@ resource "aws_ec2_transit_gateway" "this" {
 }
 
 resource "aws_ec2_transit_gateway_vpc_attachment" "this" {
+  count = "${var.vpc_attachement_create}"
+
   subnet_ids         = ["${var.attachement_subnet_ids}"]
   transit_gateway_id = "${aws_ec2_transit_gateway.this.id}"
   vpc_id             = "${var.vpc_id}"
