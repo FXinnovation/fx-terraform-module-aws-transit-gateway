@@ -4,7 +4,7 @@ provider "aws" {
   secret_key = "${var.secret_key}"
 }
 
-module "standard" {
+module "no_gateway" {
   source = "../../"
 
   transit_gateway_create = false

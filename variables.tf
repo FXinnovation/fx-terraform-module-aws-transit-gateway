@@ -1,9 +1,11 @@
 variable "name" {
   description = "Name of the Transit Gateway."
+  default     = ""
 }
 
 variable "description" {
   description = "Description of the Transit Gateway."
+  default     = ""
 }
 
 variable "attachement_subnet_ids" {
@@ -23,6 +25,7 @@ variable "vpc_attachement_create" {
 
 variable "vpc_id" {
   description = "Id of the VPC where to create the Transit Gateway."
+  default     = ""
 }
 
 variable "vpc_route_ids" {

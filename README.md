@@ -18,8 +18,8 @@ For the following reasons:
 |------|-------------|:----:|:-----:|:-----:|
 | attachement\_subnet\_ids | Subnets to attached to the Transit Gateway. These subnets will be used internally by AWS to put the Transit Gateway. | list | `[]` | no |
 | attachement\_tags | Tags of the VPC attachement of the Transit Gateway. | map | `{}` | no |
-| description | Description of the Transit Gateway. | string | n/a | yes |
-| name | Name of the Transit Gateway. | string | n/a | yes |
+| description | Description of the Transit Gateway. | string | `""` | no |
+| name | Name of the Transit Gateway. | string | `""` | no |
 | resource\_share\_account\_ids | Ids of the account where the Transit Gateway should be shared. | list | `[]` | no |
 | resource\_share\_allow\_external\_principals | Whether or not to allow external principals for the Resource Share for the Transit Gateway. | string | `"true"` | no |
 | resource\_share\_create | Whether or not to create a Resource Share for the Transit Gateway. This value cannot be computed automatically from other variables in Terraform 0.11.X. | string | `"false"` | no |
@@ -30,7 +30,7 @@ For the following reasons:
 | tags | Tags of the Transit Gateway. | map | `{}` | no |
 | transit\_gateway\_create | Whether or not to create the Transit Gateway. | string | `"true"` | no |
 | vpc\_attachement\_create | Whether or not to create the Transit Gateway VPC attachment. | string | `"true"` | no |
-| vpc\_id | Id of the VPC where to create the Transit Gateway. | string | n/a | yes |
+| vpc\_id | Id of the VPC where to create the Transit Gateway. | string | `""` | no |
 | vpc\_route\_ids | All the routes of the current VPC that should be aware of the sub accounts attached to the Transit Gateway. | list | `[]` | no |
 | vpc\_routes\_update | Whether or not to update VPC routes. This value cannot be computed automatically from other variables in Terraform 0.11.X. | string | `"true"` | no |
 
