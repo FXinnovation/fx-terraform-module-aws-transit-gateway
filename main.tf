@@ -34,6 +34,47 @@ resource "aws_ec2_transit_gateway_route" "this" {
   transit_gateway_route_table_id = "${element(concat(aws_ec2_transit_gateway.this.*.association_default_route_table_id, list("")), 0)}"
 }
 
+// https://www.terraform.io/docs/providers/aws/r/vpn_gateway.html
+resource "aws_vpn_gateway" "this" {
+  count = "${var.vpn_attachment_create}"
+
+  vpc_id = "${var.vpc_id}"
+  amazon_side_asn = "${var.aws_vpn_asn}"
+
+  tags = {
+    Name = "${merge(map("Name", format("%s", var.name)), map("Terraform", "true"), var.vpn_gateway_tags)}"
+  }
+}
+
+// https://www.terraform.io/docs/providers/aws/r/vpn_gateway_attachment.html
+resource "aws_vpn_gateway_attachment" "this" {
+  count = "${var.vpn_attachment_create}"
+
+  vpc_id         = "${var.vpc_id}"
+  vpn_gateway_id = "${aws_vpn_gateway.this.id}"
+}
+
+// https://www.terraform.io/docs/providers/aws/r/customer_gateway.html
+resource "aws_customer_gateway" "this" {
+  count = "${var.vpn_attachment_create}"
+
+  bgp_asn    = "${var.aws_vpn_asn}"
+  ip_address = "${var.aws_vpn_ip_address}"
+  type       = "${var.aws_vpn_type}"
+
+  tags = {
+    Name = "${merge(map("Name", format("%s", var.name)), map("Terraform", "true"), var.customer_gateway_tags)}"
+  }
+}
+
+// https://www.terraform.io/docs/providers/aws/r/vpn_connection.html#static_routes_only
+resource "aws_vpn_connection" "this" {
+  vpn_gateway_id      = "${aws_vpn_gateway.this.id}"
+  customer_gateway_id = "${aws_customer_gateway.this.id}"
+  type                = "${var.aws_vpn_type}"
+  static_routes_only  = "${var.aws_vpn_static_routes_only}"
+}
+
 #####
 # Resource Share
 #####
