@@ -46,15 +46,15 @@ For the following reasons:
 | arn |  |
 | association\_default\_route\_table\_id |  |
 | customer\_gateway\_ids |  |
-| customer\_gateway\_ids\_length |  |
+| customer\_gateway\_ids\_count |  |
 | customer\_gateway\_ips |  |
-| customer\_gateway\_ips\_length |  |
+| customer\_gateway\_ips\_count |  |
 | id |  |
 | owner\_id |  |
 | propagation\_default\_route\_table\_id |  |
 | resource\_share\_id |  |
 | vpc\_attachment\_id |  |
 | vpn\_connection\_ids |  |
-| vpn\_connection\_ids\_length |  |
+| vpn\_connection\_ids\_count |  |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
