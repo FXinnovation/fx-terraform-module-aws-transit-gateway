@@ -41,9 +41,7 @@ resource "aws_customer_gateway" "this" {
   ip_address = "${element(var.vpn_ips, count.index)}"
   type       = "${element(var.vpn_types, count.index)}"
 
-  tags = {
-    Name = "${merge(map("Name", format("%s-%02d", var.name, count.index)), map("Terraform", "true"), var.customer_gateway_tags)}"
-  }
+  tags = "${merge(map("Name", format("%s-%02d", var.name, count.index)), map("Terraform", "true"), var.customer_gateway_tags)}"
 }
 
 #####
@@ -57,9 +55,7 @@ resource "aws_vpn_connection" "this" {
   customer_gateway_id = "${element(aws_customer_gateway.this.*.id, count.index)}"
   type                = "${element(var.vpn_ips, count.index)}"
 
-  tags = {
-    Name = "${merge(map("Name", format("%s-%02d", var.name, count.index)), map("Terraform", "true"), var.vpn_tags)}"
-  }
+  tags = "${merge(map("Name", format("%s-%02d", var.name, count.index)), map("Terraform", "true"), var.vpn_tags)}"
 }
 
 #####
