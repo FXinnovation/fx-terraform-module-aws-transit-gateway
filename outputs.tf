@@ -30,10 +30,22 @@ output "vpn_connection_ids" {
   value = "${element(concat(aws_vpn_connection.this.*.id, list("")), 0)}"
 }
 
+output "vpn_connection_ids" {
+  value = "${length(aws_vpn_connection.this.*.id)}"
+}
+
 output "customer_gateway_ids" {
   value = "${element(concat(aws_customer_gateway.this.*.id, list("")), 0)}"
 }
 
+output "customer_gateway_ids_length" {
+  value = "${length(aws_customer_gateway.this.*.id)}"
+}
+
 output "customer_gateway_ips" {
   value = "${element(concat(aws_customer_gateway.this.*.ip_address, list("")), 0)}"
+}
+
+output "customer_gateway_ips_length" {
+  value = "${length(aws_customer_gateway.this.*.ip_address)}"
 }
