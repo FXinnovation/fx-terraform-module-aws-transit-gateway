@@ -58,6 +58,14 @@ resource "aws_vpn_connection" "this" {
   tags = "${merge(map("Name", format("%s-%02d", var.name, count.index)), map("Terraform", "true"), var.vpn_tags)}"
 }
 
+resource "aws_route" "this_vpn_routes" {
+  count = "${var.vpc_routes_update ? length(var.vpc_route_table_ids) * length(var.route_attached_vpn_cidrs) : 0}"
+
+  route_table_id         = "${element(var.vpc_route_table_ids, count.index / length(var.route_attached_vpn_cidrs))}"
+  destination_cidr_block = "${element(var.route_attached_vpn_cidrs, count.index % length(var.route_attached_vpn_cidrs))}"
+  transit_gateway_id     = "${aws_ec2_transit_gateway.this.id}"
+}
+
 #####
 # Resource Share
 #####
