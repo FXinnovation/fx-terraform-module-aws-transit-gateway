@@ -103,6 +103,11 @@ variable "vpn_asns" {
 }
 
 variable "vpn_tags" {
-  description = "Tags of the VPN Connection."
+  description = "Tags of the VPN Connections."
+  default     = {}
+}
+
+variable "customer_gateway_tags" {
+  description = "Tags of the Customer Gateways."
   default     = {}
 }

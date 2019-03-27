@@ -35,11 +35,11 @@ resource "aws_ec2_transit_gateway_route" "this" {
 }
 
 resource "aws_customer_gateway" "this" {
-  count = "${length(var.vpn_ips}"
+  count = "${length(var.vpn_ips)}"
 
-  bgp_asn    = "${element(var.vpn_asns, count.index}"
+  bgp_asn    = "${element(var.vpn_asns, count.index)}"
   ip_address = "${element(var.vpn_ips, count.index)}"
-  type       = "${element(var.vpn_types, count.index}"
+  type       = "${element(var.vpn_types, count.index)}"
 
   tags = {
     Name = "${merge(map("Name", format("%s-%02d", var.name, count.index)), map("Terraform", "true"), var.customer_gateway_tags)}"
@@ -53,7 +53,7 @@ resource "aws_customer_gateway" "this" {
 resource "aws_vpn_connection" "this" {
   count = "${length(var.vpn_ips)}"
 
-  transit_gateway_id  = "${aws_vpn_gateway.this.id}"
+  transit_gateway_id  = "${aws_ec2_transit_gateway.this.id}"
   customer_gateway_id = "${element(aws_customer_gateway.this.*.id, count.index)}"
   type                = "${element(var.vpn_ips, count.index)}"
 
