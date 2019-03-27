@@ -30,7 +30,7 @@ output "vpn_connection_ids" {
   value = "${element(concat(aws_vpn_connection.this.*.id, list("")), 0)}"
 }
 
-output "vpn_connection_ids" {
+output "vpn_connection_ids_length" {
   value = "${length(aws_vpn_connection.this.*.id)}"
 }
 
