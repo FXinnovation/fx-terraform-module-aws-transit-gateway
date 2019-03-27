@@ -86,3 +86,23 @@ variable "resource_share_tags" {
   description = "Tags of the Resource Share for the Transit Gateway."
   default     = {}
 }
+
+variable "vpn_ips" {
+  description = "List of VPN ip's for which you want a VPN Connection."
+  default     = []
+}
+
+variable "vpn_types" {
+  description = "List of : The types of the VPN connections. The only type AWS supports at this time is 'ipsec.1'."
+  default     = []
+}
+
+variable "vpn_asns" {
+  description = "List of : The gateway's Border Gateway Protocol (BGP) Autonomous System Number (ASN)."
+  default     = []
+}
+
+variable "vpn_tags" {
+  description = "Tags of the VPN Connection."
+  default     = {}
+}
