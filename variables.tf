@@ -87,6 +87,10 @@ variable "resource_share_tags" {
   default     = {}
 }
 
+#####
+# VPN
+#####
+
 variable "vpn_ips" {
   description = "List of VPN ip's for which you want a VPN Connection."
   default     = []
