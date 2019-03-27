@@ -34,6 +34,10 @@ resource "aws_ec2_transit_gateway_route" "this" {
   transit_gateway_route_table_id = "${element(concat(aws_ec2_transit_gateway.this.*.association_default_route_table_id, list("")), 0)}"
 }
 
+#####
+# VPN
+#####
+
 resource "aws_customer_gateway" "this" {
   count = "${length(var.vpn_ips)}"
 
@@ -43,10 +47,6 @@ resource "aws_customer_gateway" "this" {
 
   tags = "${merge(map("Name", format("%s-%02d", var.name, count.index)), map("Terraform", "true"), var.customer_gateway_tags)}"
 }
-
-#####
-# VPN
-#####
 
 resource "aws_vpn_connection" "this" {
   count = "${length(var.vpn_ips)}"
@@ -90,9 +90,9 @@ resource "aws_ram_resource_association" "this" {
 #####
 
 resource "aws_route" "this" {
-  count = "${var.vpc_routes_update ? length(var.vpc_route_ids) * length(var.route_attached_vpc_cidrs) : 0}"
+  count = "${var.vpc_routes_update ? length(var.vpc_route_table_ids) * length(var.route_attached_vpc_cidrs) : 0}"
 
-  route_table_id         = "${element(var.vpc_route_ids, count.index / length(var.route_attached_vpc_cidrs))}"
+  route_table_id         = "${element(var.vpc_route_table_ids, count.index / length(var.route_attached_vpc_cidrs))}"
   destination_cidr_block = "${element(var.route_attached_vpc_cidrs, count.index % length(var.route_attached_vpc_cidrs))}"
   transit_gateway_id     = "${aws_ec2_transit_gateway.this.id}"
 }
