@@ -53,7 +53,7 @@ resource "aws_vpn_connection" "this" {
 
   transit_gateway_id  = "${aws_ec2_transit_gateway.this.id}"
   customer_gateway_id = "${element(aws_customer_gateway.this.*.id, count.index)}"
-  type                = "${element(var.vpn_ips, count.index)}"
+  type                = "${element(var.vpn_types, count.index)}"
 
   tags = "${merge(map("Name", format("%s-%02d", var.name, count.index)), map("Terraform", "true"), var.vpn_tags)}"
 }
