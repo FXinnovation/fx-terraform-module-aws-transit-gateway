@@ -30,7 +30,8 @@ module "with-vpn" {
   vpn_ips                = ["172.0.0.1"]
   vpn_types              = ["ipsec.1"]
   vpn_asns               = [65000]
-  vpn_tags               = {
+
+  vpn_tags = {
     foo = "bar"
   }
 
