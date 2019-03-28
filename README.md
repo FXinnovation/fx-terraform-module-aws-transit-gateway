@@ -33,6 +33,7 @@ For the following reasons:
 | transit\_gateway\_create | Whether or not to create the Transit Gateway. | string | `"true"` | no |
 | vpc\_attachement\_create | Whether or not to create the Transit Gateway VPC attachment. | string | `"true"` | no |
 | vpc\_id | Id of the VPC where to create the Transit Gateway. | string | `""` | no |
+| vpc\_route\_table\_count | The count of all the route tables of the current VPC that should be aware of the sub accounts/VPN attached to the Transit Gateway. This value cannot be computed automatically from vpc_route_table_ids in Terraform 0.11.X. | string | `"0"` | no |
 | vpc\_route\_table\_ids | All the route tables of the current VPC that should be aware of the sub accounts/VPN attached to the Transit Gateway. | list | `[]` | no |
 | vpc\_routes\_update | Whether or not to update VPC routes. This value cannot be computed automatically from other variables in Terraform 0.11.X. | string | `"true"` | no |
 | vpn\_asns | List of : The gateway's Border Gateway Protocol (BGP) Autonomous System Number (ASN). | list | `[]` | no |
