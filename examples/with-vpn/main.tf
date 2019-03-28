@@ -17,7 +17,7 @@ data "aws_route_table" "selected" {
   vpc_id = "${data.aws_vpc.default.id}"
 }
 
-module "standard" {
+module "with-vpn" {
   source = "../../"
 
   name                   = "tftest"
@@ -27,6 +27,13 @@ module "standard" {
   vpc_id                 = "${data.aws_vpc.default.id}"
   vpc_route_table_ids    = ["${data.aws_route_table.selected.id}"]
   vpc_routes_update      = false
+  vpn_ips                = ["172.0.0.1"]
+  vpn_types              = ["ipsec.1"]
+  vpn_asns               = [65000]
+
+  vpn_tags = {
+    foo = "bar"
+  }
 
   tags = {
     Terraform = "test"

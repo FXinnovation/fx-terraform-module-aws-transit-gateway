@@ -28,8 +28,8 @@ variable "vpc_id" {
   default     = ""
 }
 
-variable "vpc_route_ids" {
-  description = "All the routes of the current VPC that should be aware of the sub accounts attached to the Transit Gateway."
+variable "vpc_route_table_ids" {
+  description = "All the route tables of the current VPC that should be aware of the sub accounts/VPN attached to the Transit Gateway."
   default     = []
 }
 
@@ -63,7 +63,7 @@ variable "resource_share_allow_external_principals" {
 }
 
 variable "route_attached_vpc_cidrs" {
-  description = "All the CIDRs of the attached VPCs to the Transit Gateway. These routes will be used to update the current VPC route tables, not the Transit Gateway route table itself. Note: the default value solves the terrible Terraform variable preprocessing in 0.11.X, preventing conditions to work correctly when this variable is an empty list. To make sure routes are not updated with this dummy value, set vpc_routes_update=false."
+  description = "All the CIDRs of the attached VPCs to the Transit Gateway. These routes will be used to update the current VPC route tables, not the Transit Gateway route table itself. Note: the default value solves the Terraform variable preprocessing in 0.11.X, preventing conditions to work correctly when this variable is an empty list. To make sure routes are not updated with this dummy value, set vpc_routes_update=false."
   default     = ["127.0.0.1/32"]
 }
 
@@ -85,4 +85,38 @@ variable "resource_share_name" {
 variable "resource_share_tags" {
   description = "Tags of the Resource Share for the Transit Gateway."
   default     = {}
+}
+
+#####
+# VPN
+#####
+
+variable "vpn_ips" {
+  description = "List of VPN ip's for which you want a VPN Connection."
+  default     = []
+}
+
+variable "vpn_types" {
+  description = "List of : The types of the VPN connections. The only type AWS supports at this time is 'ipsec.1'."
+  default     = []
+}
+
+variable "vpn_asns" {
+  description = "List of : The gateway's Border Gateway Protocol (BGP) Autonomous System Number (ASN)."
+  default     = []
+}
+
+variable "vpn_tags" {
+  description = "Tags of the VPN Connections."
+  default     = {}
+}
+
+variable "customer_gateway_tags" {
+  description = "Tags of the Customer Gateways."
+  default     = {}
+}
+
+variable "route_attached_vpn_cidrs" {
+  description = "All the CIDRs of the attached VPNs to the Transit Gateway. These routes will be used to update the current VPC route tables, not the Transit Gateway route table itself. Note: the default value solves the Terraform variable preprocessing in 0.11.X, preventing conditions to work correctly when this variable is an empty list. To make sure routes are not updated with this dummy value, set vpc_routes_update=false."
+  default     = ["127.0.0.1/32"]
 }

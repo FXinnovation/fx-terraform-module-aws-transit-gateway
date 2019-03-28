@@ -35,6 +35,38 @@ resource "aws_ec2_transit_gateway_route" "this" {
 }
 
 #####
+# VPN
+#####
+
+resource "aws_customer_gateway" "this" {
+  count = "${length(var.vpn_ips)}"
+
+  bgp_asn    = "${element(var.vpn_asns, count.index)}"
+  ip_address = "${element(var.vpn_ips, count.index)}"
+  type       = "${element(var.vpn_types, count.index)}"
+
+  tags = "${merge(map("Name", format("%s-%02d", var.name, count.index)), map("Terraform", "true"), var.customer_gateway_tags)}"
+}
+
+resource "aws_vpn_connection" "this" {
+  count = "${length(var.vpn_ips)}"
+
+  transit_gateway_id  = "${aws_ec2_transit_gateway.this.id}"
+  customer_gateway_id = "${element(aws_customer_gateway.this.*.id, count.index)}"
+  type                = "${element(var.vpn_types, count.index)}"
+
+  tags = "${merge(map("Name", format("%s-%02d", var.name, count.index)), map("Terraform", "true"), var.vpn_tags)}"
+}
+
+resource "aws_route" "this_vpn_routes" {
+  count = "${var.vpc_routes_update ? length(var.vpc_route_table_ids) * length(var.route_attached_vpn_cidrs) : 0}"
+
+  route_table_id         = "${element(var.vpc_route_table_ids, count.index / length(var.route_attached_vpn_cidrs))}"
+  destination_cidr_block = "${element(var.route_attached_vpn_cidrs, count.index % length(var.route_attached_vpn_cidrs))}"
+  transit_gateway_id     = "${aws_ec2_transit_gateway.this.id}"
+}
+
+#####
 # Resource Share
 #####
 
@@ -66,9 +98,9 @@ resource "aws_ram_resource_association" "this" {
 #####
 
 resource "aws_route" "this" {
-  count = "${var.vpc_routes_update ? length(var.vpc_route_ids) * length(var.route_attached_vpc_cidrs) : 0}"
+  count = "${var.vpc_routes_update ? length(var.vpc_route_table_ids) * length(var.route_attached_vpc_cidrs) : 0}"
 
-  route_table_id         = "${element(var.vpc_route_ids, count.index / length(var.route_attached_vpc_cidrs))}"
+  route_table_id         = "${element(var.vpc_route_table_ids, count.index / length(var.route_attached_vpc_cidrs))}"
   destination_cidr_block = "${element(var.route_attached_vpc_cidrs, count.index % length(var.route_attached_vpc_cidrs))}"
   transit_gateway_id     = "${aws_ec2_transit_gateway.this.id}"
 }

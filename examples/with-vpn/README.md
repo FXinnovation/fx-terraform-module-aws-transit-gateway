@@ -1,6 +1,6 @@
-# No Transit Gateway
+# With VPN Transit Gateway
 
-Use the module but without creating any gateway. Useful to replace the lack of “count” with modules.
+Creates a Transit Gateway with a Resource Share and a VPN Connection.
 
 ## Usage
 
