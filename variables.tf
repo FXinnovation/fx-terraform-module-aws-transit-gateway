@@ -28,6 +28,11 @@ variable "vpc_id" {
   default     = ""
 }
 
+variable "vpc_route_table_count" {
+  description = "The count of all the route tables of the current VPC that should be aware of the sub accounts/VPN attached to the Transit Gateway. This value cannot be computed automatically from vpc_route_table_ids in Terraform 0.11.X."
+  default     = 0
+}
+
 variable "vpc_route_table_ids" {
   description = "All the route tables of the current VPC that should be aware of the sub accounts/VPN attached to the Transit Gateway."
   default     = []
