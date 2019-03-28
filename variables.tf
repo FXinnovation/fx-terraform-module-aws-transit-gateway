@@ -111,6 +111,11 @@ variable "vpn_tags" {
   default     = {}
 }
 
+variable "vpn_static_routes_options" {
+  description = "List of : Whether the VPN connection uses static routes exclusively. Static routes must be used for devices that don't support BGP."
+  default     = []
+}
+
 variable "customer_gateway_tags" {
   description = "Tags of the Customer Gateways."
   default     = {}
