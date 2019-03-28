@@ -27,8 +27,8 @@ module "with-vpn" {
   vpc_id                    = "${data.aws_vpc.default.id}"
   vpc_route_table_ids       = ["${data.aws_route_table.selected.id}"]
   vpc_routes_update         = false
-  vpn_ips                   = ["172.0.0.1","173.0.0.1"]
-  vpn_types                 = ["ipsec.1","ipsec.1"]
+  vpn_ips                   = ["172.0.0.1", "173.0.0.1"]
+  vpn_types                 = ["ipsec.1", "ipsec.1"]
   vpn_asns                  = [65000, 65000]
   vpn_static_routes_options = [false, true]
 
