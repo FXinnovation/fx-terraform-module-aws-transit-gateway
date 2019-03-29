@@ -40,9 +40,5 @@ module "with-vpn" {
     Terraform = "test"
   }
 
-  attachement_tags = {
-    Terraform = "test"
-  }
-
   resource_share_create = false
 }

@@ -33,7 +33,7 @@ module "standard" {
   }
 
   attachement_tags = {
-    Terraform = "test"
+    foot = "bar"
   }
 
   resource_share_create = false
