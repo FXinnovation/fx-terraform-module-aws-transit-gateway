@@ -44,7 +44,7 @@ For the following reasons:
 | vpc\_routes\_update | Whether or not to update VPC route tables with route_attached_vpn_cidrs and route_attached_vpc_cidrs. This value cannot be computed automatically from other variables in Terraform 0.11.X. | string | `"true"` | no |
 | vpn\_asns | List of : The gateway's Border Gateway Protocol (BGP) Autonomous System Number (ASN). | list | `[]` | no |
 | vpn\_ips | List of VPN ip's for which you want a VPN Connection. | list | `[]` | no |
-| vpn\_name\_prefix | Suffix of the name of the VPN Connections. | string | `"vpn"` | no |
+| vpn\_name\_suffix | Suffix of the name of the VPN Connections. | string | `"vpn"` | no |
 | vpn\_static\_routes\_options | List of: Whether the VPN connection uses static routes exclusively. Static routes must be used for devices that don't support BGP. | list | `[]` | no |
 | vpn\_tags | Tags of the VPN Connections. | map | `{}` | no |
 | vpn\_types | List of : The types of the VPN connections. The only type AWS supports at this time is 'ipsec.1'. | list | `[]` | no |

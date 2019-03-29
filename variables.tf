@@ -127,7 +127,7 @@ variable "vpn_ips" {
   default     = []
 }
 
-variable "vpn_name_prefix" {
+variable "vpn_name_suffix" {
   description = "Suffix of the name of the VPN Connections."
   default     = "vpn"
 }
