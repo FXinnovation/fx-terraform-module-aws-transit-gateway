@@ -10,7 +10,7 @@ resource "aws_ec2_transit_gateway" "this" {
   default_route_table_association = "enable"
   default_route_table_propagation = "enable"
 
-  tags = "${merge(map("Name", format("%s-%s-%02d", var.name, var.transit_gateway_name_suffix, count.index))), var.tags, var.transit_gateway_tags)}"
+  tags = "${merge(map("Name", format("%s-%s-%02d", var.name, var.transit_gateway_name_suffix, count.index)), var.tags, var.transit_gateway_tags)}"
 }
 
 resource "aws_ec2_transit_gateway_route" "this" {
