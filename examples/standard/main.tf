@@ -34,7 +34,7 @@ module "standard" {
   }
 
   vpc_attachement_tags = {
-    foot = "bar"
+    foo = "bar"
   }
 
   resource_share_create = false
