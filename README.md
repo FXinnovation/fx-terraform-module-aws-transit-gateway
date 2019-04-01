@@ -47,7 +47,7 @@ For the following reasons:
 | vpn\_name\_suffix | Suffix of the name of the VPN Connections. | string | `"vpn"` | no |
 | vpn\_static\_routes\_options | List of: Whether the VPN connection uses static routes exclusively. Static routes must be used for devices that don't support BGP. | list | `[]` | no |
 | vpn\_tags | Tags of the VPN Connections. | map | `{}` | no |
-| vpn\_types | List of : The types of the VPN connections. The only type AWS supports at this time is 'ipsec.1'. | list | `[]` | no |
+| vpn\_type | List of : The types of the VPN connections. The only type AWS supports at this time is 'ipsec.1'. | string | `"ipsec.1"` | no |
 
 ## Outputs
 

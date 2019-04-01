@@ -142,9 +142,9 @@ variable "vpn_tags" {
   default     = {}
 }
 
-variable "vpn_types" {
+variable "vpn_type" {
   description = "List of : The types of the VPN connections. The only type AWS supports at this time is 'ipsec.1'."
-  default     = []
+  default     = "ipsec.1"
 }
 
 #####

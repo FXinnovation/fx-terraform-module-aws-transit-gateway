@@ -58,7 +58,7 @@ resource "aws_vpn_connection" "this" {
   transit_gateway_id  = "${aws_ec2_transit_gateway.this.id}"
   customer_gateway_id = "${element(aws_customer_gateway.this.*.id, count.index)}"
   static_routes_only  = "${element(var.vpn_static_routes_options, count.index)}"
-  type                = "${element(var.vpn_types, count.index)}"
+  type                = "${var.vpn_type}"
 
   tags = "${merge(map("Name", format("%s-%s-%02d", var.name, var.vpn_name_suffix, count.index)), var.tags, var.vpn_tags)}"
 }
