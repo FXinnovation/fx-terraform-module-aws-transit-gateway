@@ -32,6 +32,10 @@ module "with-vpn" {
   vpn_asns                          = [65000, 65000]
   vpn_static_routes_options         = [false, true]
 
+  vpc_transit_gateway_route_count        = "1"
+  vpc_transit_gateway_route_cidrs        = ["${data.aws_vpc.default.cidr_block}"]
+  vpc_transit_gateway_route_cidr_indexes = [0]
+
   vpn_transit_gateway_route_count        = 3
   vpn_transit_gateway_route_cidrs        = ["20.5.0.0/16", "20.10.0.0/16", "20.11.0.0/16"]
   vpn_transit_gateway_route_cidr_indexes = [0, 1, 1]

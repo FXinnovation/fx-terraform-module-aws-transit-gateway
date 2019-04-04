@@ -40,6 +40,9 @@ For the following reasons:
 | vpc\_route\_table\_count | The count of all the route tables of the current VPC that should be aware of the sub accounts/VPN attached to the Transit Gateway. This value cannot be computed automatically from vpc_route_table_ids in Terraform 0.11.X. | string | `"0"` | no |
 | vpc\_route\_table\_ids | All the route tables of the current VPC that should be aware of the sub accounts VPCs or VPNs attached to the Transit Gateway. They will be updated with  with route_attached_vpn_cidrs and route_attached_vpc_cidrs. | list | `[]` | no |
 | vpc\_routes\_update | Whether or not to update VPC route tables with route_attached_vpn_cidrs and route_attached_vpc_cidrs. This value cannot be computed automatically from other variables in Terraform 0.11.X. | string | `"true"` | no |
+| vpc\_transit\_gateway\_route\_cidr\_indexes | List of VPC Connection index that connects vpc_transit_gateway_route_cidrs with the correct VPN. Tied with vpc_transit_gateway_route_cidrs, must have the same number of element. | list | `[]` | no |
+| vpc\_transit\_gateway\_route\_cidrs | List routes for the VPC attachement to bind to the Transit Gateway route table. Tied with vpc_transit_gateway_route_cidr_indexes, must have the same number of element. | list | `[]` | no |
+| vpc\_transit\_gateway\_route\_count | Count of routes for the VPC attachement to bind to the Transit Gateway route table. This value cannot be computed automatically from other variables in Terraform 0.11.X. | string | `"0"` | no |
 | vpn\_asns | List of : The gateway's Border Gateway Protocol (BGP) Autonomous System Number (ASN). | list | `[]` | no |
 | vpn\_ips | List of VPN ip's for which you want a VPN Connection. | list | `[]` | no |
 | vpn\_name\_suffix | Suffix of the name of the VPN Connections. | string | `"vpn"` | no |

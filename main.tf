@@ -44,6 +44,14 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "this" {
   tags = "${merge(map("Name", format("%s-%s-%02d", var.name, var.vpc_attachment_name_suffix, count.index + 1)), var.tags, var.vpc_attachement_tags)}"
 }
 
+resource "aws_ec2_transit_gateway_route" "this_vpc" {
+  count = "${var.vpc_transit_gateway_route_count}"
+
+  destination_cidr_block         = "${element(var.vpc_transit_gateway_route_cidrs, count.index)}"
+  transit_gateway_attachment_id  = "${element(aws_ec2_transit_gateway_vpc_attachment.this.id, element(var.vpc_transit_gateway_route_cidr_indexes, count.index))}"
+  transit_gateway_route_table_id = "${element(concat(aws_ec2_transit_gateway.this.*.association_default_route_table_id, list("")), 0)}"
+}
+
 #####
 # VPN Attachements
 #####
@@ -69,7 +77,7 @@ resource "aws_vpn_connection" "this" {
   tags = "${merge(map("Name", format("%s-%s-%02d", var.name, var.vpn_name_suffix, count.index + 1)), var.tags, var.vpn_tags)}"
 }
 
-resource "aws_ec2_transit_gateway_route" "this" {
+resource "aws_ec2_transit_gateway_route" "this_vpn" {
   count = "${var.vpn_transit_gateway_route_count}"
 
   destination_cidr_block         = "${element(var.vpn_transit_gateway_route_cidrs, count.index)}"

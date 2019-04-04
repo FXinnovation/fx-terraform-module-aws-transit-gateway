@@ -93,6 +93,21 @@ variable "vpc_attachement_tags" {
   default     = {}
 }
 
+variable "vpc_transit_gateway_route_count" {
+  description = "Count of routes for the VPC attachement to bind to the Transit Gateway route table. This value cannot be computed automatically from other variables in Terraform 0.11.X."
+  default     = 0
+}
+
+variable "vpc_transit_gateway_route_cidr_indexes" {
+  description = "List of VPC Connection index that connects vpc_transit_gateway_route_cidrs with the correct VPN. Tied with vpc_transit_gateway_route_cidrs, must have the same number of element."
+  default     = []
+}
+
+variable "vpc_transit_gateway_route_cidrs" {
+  description = "List routes for the VPC attachement to bind to the Transit Gateway route table. Tied with vpc_transit_gateway_route_cidr_indexes, must have the same number of element."
+  default     = []
+}
+
 #####
 # VPN Attachement
 #####
