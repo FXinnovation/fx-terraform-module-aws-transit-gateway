@@ -17,6 +17,14 @@ resource "aws_ec2_transit_gateway" "this" {
   default_route_table_propagation = "enable"
 
   tags = "${merge(map("Name", format("%s-%s-%02d", var.name, var.transit_gateway_name_suffix, count.index + 1)), var.tags, var.transit_gateway_tags)}"
+
+  // This makes sure the Transit Gateway is ready to use before using it.
+  // It fixes random “transit gateway not found” error
+  provisioner "local-exec" {
+    command = "sleep 20"
+
+    when = "create"
+  }
 }
 
 resource "aws_ec2_transit_gateway_route" "this" {
