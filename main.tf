@@ -17,14 +17,6 @@ resource "aws_ec2_transit_gateway" "this" {
   default_route_table_propagation = "enable"
 
   tags = "${merge(map("Name", format("%s-%s-%02d", var.name, var.transit_gateway_name_suffix, count.index + 1)), var.tags, var.transit_gateway_tags)}"
-
-  // This makes sure the Transit Gateway is ready to use before using it.
-  // It fixes random “transit gateway not found” error
-  provisioner "local-exec" {
-    command = "sleep 20"
-
-    when = "create"
-  }
 }
 
 #####
@@ -122,6 +114,8 @@ resource "aws_route" "this_vpc_routes" {
   route_table_id         = "${element(var.vpc_route_table_ids, count.index / length(var.route_attached_vpc_cidrs))}"
   destination_cidr_block = "${element(var.route_attached_vpc_cidrs, count.index % length(var.route_attached_vpc_cidrs))}"
   transit_gateway_id     = "${aws_ec2_transit_gateway.this.id}"
+
+  depends_on = ["aws_ec2_transit_gateway.this"]
 }
 
 resource "aws_route" "this_vpn_routes" {
@@ -130,4 +124,6 @@ resource "aws_route" "this_vpn_routes" {
   route_table_id         = "${element(var.vpc_route_table_ids, count.index / length(var.route_attached_vpn_cidrs))}"
   destination_cidr_block = "${element(var.route_attached_vpn_cidrs, count.index % length(var.route_attached_vpn_cidrs))}"
   transit_gateway_id     = "${aws_ec2_transit_gateway.this.id}"
+
+  depends_on = ["aws_ec2_transit_gateway.this"]
 }
