@@ -45,8 +45,8 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "this" {
 resource "aws_customer_gateway" "this" {
   count = "${length(var.vpn_ips)}"
 
-  bgp_asn    = "${element(var.vpn_asns, count.index + 1)}"
-  ip_address = "${element(var.vpn_ips, count.index + 1)}"
+  bgp_asn    = "${element(var.vpn_asns, count.index)}"
+  ip_address = "${element(var.vpn_ips, count.index)}"
   type       = "${var.vpn_type}"
 
   tags = "${merge(map("Name", format("%s-%s-%02d", var.name, var.customer_gateway_name_suffix, count.index + 1)), var.tags, var.customer_gateway_tags)}"
@@ -56,8 +56,8 @@ resource "aws_vpn_connection" "this" {
   count = "${length(var.vpn_ips)}"
 
   transit_gateway_id  = "${aws_ec2_transit_gateway.this.id}"
-  customer_gateway_id = "${element(aws_customer_gateway.this.*.id, count.index + 1)}"
-  static_routes_only  = "${element(var.vpn_static_routes_options, count.index + 1)}"
+  customer_gateway_id = "${element(aws_customer_gateway.this.*.id, count.index)}"
+  static_routes_only  = "${element(var.vpn_static_routes_options, count.index)}"
   type                = "${var.vpn_type}"
 
   tags = "${merge(map("Name", format("%s-%s-%02d", var.name, var.vpn_name_suffix, count.index + 1)), var.tags, var.vpn_tags)}"
@@ -79,7 +79,7 @@ resource "aws_ram_resource_share" "this" {
 resource "aws_ram_principal_association" "this" {
   count = "${var.resource_share_create}"
 
-  principal          = "${element(var.resource_share_account_ids, count.index + 1)}"
+  principal          = "${element(var.resource_share_account_ids, count.index)}"
   resource_share_arn = "${aws_ram_resource_share.this.id}"
 }
 
