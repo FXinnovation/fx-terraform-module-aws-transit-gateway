@@ -1,5 +1,5 @@
 provider "aws" {
-  version    = "~> 2.3.0"
+  version    = "~> 2.4.0"
   region     = "${var.region}"
   access_key = "${var.access_key}"
   secret_key = "${var.secret_key}"
@@ -20,17 +20,23 @@ data "aws_route_table" "selected" {
 module "with-vpn" {
   source = "../../"
 
-  name                              = "tftest"
-  transit_gateway_description       = "Terraform test Transit Gateway"
-  transit_gateway_subnet_ids        = "${data.aws_subnet_ids.all.ids}"
-  transit_gateway_route_cidrs_count = 1
-  transit_gateway_route_cidrs       = ["10.90.10.0/24"]
-  vpc_id                            = "${data.aws_vpc.default.id}"
-  vpc_route_table_ids               = ["${data.aws_route_table.selected.id}"]
-  vpc_routes_update                 = false
-  vpn_ips                           = ["172.0.0.1", "173.0.0.1"]
-  vpn_asns                          = [65000, 65000]
-  vpn_static_routes_options         = [false, true]
+  name                        = "tftest"
+  transit_gateway_description = "Terraform test Transit Gateway"
+  transit_gateway_subnet_ids  = "${data.aws_subnet_ids.all.ids}"
+  vpc_id                      = "${data.aws_vpc.default.id}"
+  vpc_route_table_ids         = ["${data.aws_route_table.selected.id}"]
+  vpc_routes_update           = false
+  vpn_ips                     = ["172.0.0.1", "173.0.0.1"]
+  vpn_asns                    = [65000, 65000]
+  vpn_static_routes_options   = [false, true]
+
+  vpc_transit_gateway_route_count        = "1"
+  vpc_transit_gateway_route_cidrs        = ["${data.aws_vpc.default.cidr_block}"]
+  vpc_transit_gateway_route_cidr_indexes = [0]
+
+  vpn_transit_gateway_route_count        = 3
+  vpn_transit_gateway_route_cidrs        = ["20.5.0.0/16", "20.10.0.0/16", "20.11.0.0/16"]
+  vpn_transit_gateway_route_cidr_indexes = [0, 1, 1]
 
   vpn_tags = {
     foo = "bar"
