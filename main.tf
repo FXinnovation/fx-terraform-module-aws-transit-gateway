@@ -73,7 +73,7 @@ resource "aws_ec2_transit_gateway_route" "this" {
   count = "${var.vpn_transit_gateway_route_count}"
 
   destination_cidr_block         = "${element(var.vpn_transit_gateway_route_cidrs, count.index)}"
-  transit_gateway_attachment_id  = "${element(concat(aws_ec2_transit_gateway.this.*.transit_gateway_attachment_id, list("")), element(var.vpn_transit_gateway_route_cidr_indexes, count.index))}"
+  transit_gateway_attachment_id  = "${element(concat(aws_vpn_connection.this.*.transit_gateway_attachment_id, list("")), element(var.vpn_transit_gateway_route_cidr_indexes, count.index))}"
   transit_gateway_route_table_id = "${element(concat(aws_ec2_transit_gateway.this.*.association_default_route_table_id, list("")), 0)}"
 }
 
