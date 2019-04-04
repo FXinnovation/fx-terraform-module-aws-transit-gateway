@@ -43,8 +43,6 @@ For the following reasons:
 | vpc\_route\_table\_ids | All the route tables of the current VPC that should be aware of the sub accounts VPCs or VPNs attached to the Transit Gateway. They will be updated with  with route_attached_vpn_cidrs and route_attached_vpc_cidrs. | list | `[]` | no |
 | vpc\_routes\_update | Whether or not to update VPC route tables with route_attached_vpn_cidrs and route_attached_vpc_cidrs. This value cannot be computed automatically from other variables in Terraform 0.11.X. | string | `"true"` | no |
 | vpn\_asns | List of : The gateway's Border Gateway Protocol (BGP) Autonomous System Number (ASN). | list | `[]` | no |
-| vpn\_attachement\_tags | Tags of the VPN attachement of the Transit Gateway. | map | `{}` | no |
-| vpn\_attachment\_name\_suffix | Suffix of the name of the VPN attachements. | string | `"attachement"` | no |
 | vpn\_ips | List of VPN ip's for which you want a VPN Connection. | list | `[]` | no |
 | vpn\_name\_suffix | Suffix of the name of the VPN Connections. | string | `"vpn"` | no |
 | vpn\_static\_routes\_options | List of: Whether the VPN connection uses static routes exclusively. Static routes must be used for devices that don't support BGP. | list | `[]` | no |

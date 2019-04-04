@@ -147,16 +147,6 @@ variable "vpn_type" {
   default     = "ipsec.1"
 }
 
-variable "vpn_attachment_name_suffix" {
-  description = "Suffix of the name of the VPN attachements."
-  default     = "attachement"
-}
-
-variable "vpn_attachement_tags" {
-  description = "Tags of the VPN attachement of the Transit Gateway."
-  default     = {}
-}
-
 #####
 # Resource Share
 #####
