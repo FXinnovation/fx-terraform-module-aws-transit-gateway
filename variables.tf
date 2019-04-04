@@ -45,16 +45,6 @@ variable "vpc_id" {
   default     = ""
 }
 
-variable "transit_gateway_route_cidrs_count" {
-  description = "How many transit_gateway_route_cidrs to add to the Transit Gateway route table. This value cannot be computed automatically from transit_gateway_route_cidrs in Terraform 0.11.X"
-  default     = 0
-}
-
-variable "transit_gateway_route_cidrs" {
-  description = "All the CIDRs for the Transit Gateway route table. Note that the VPCs CIDR (for the current VPC and the attached VPCs) will be automatically propagated via VPC attachement and thus should not be in this list."
-  default     = []
-}
-
 #####
 # Routes
 #####
@@ -145,6 +135,21 @@ variable "vpn_tags" {
 variable "vpn_type" {
   description = "List of : The types of the VPN connections. The only type AWS supports at this time is 'ipsec.1'."
   default     = "ipsec.1"
+}
+
+variable "vpn_transit_gateway_route_count" {
+  description = "Count of routes for the VPN attachement to bind to the Transit Gateway route table. This value cannot be computed automatically from other variables in Terraform 0.11.X."
+  default     = 0
+}
+
+variable "vpn_transit_gateway_route_cidr_indexes" {
+  description = "List of VPN Connection index that connects vpn_transit_gateway_route_cidrs with the correct VPN. Tied with vpn_transit_gateway_route_cidrs, must have the same number of element."
+  default     = []
+}
+
+variable "vpn_transit_gateway_route_cidrs" {
+  description = "List routes for the VPN attachement to bind to the Transit Gateway route table. Tied with vpn_transit_gateway_route_cidr_indexes, must have the same number of element."
+  default     = []
 }
 
 #####

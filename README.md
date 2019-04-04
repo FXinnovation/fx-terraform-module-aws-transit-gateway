@@ -31,8 +31,6 @@ For the following reasons:
 | transit\_gateway\_create | Whether or not to create the Transit Gateway. | string | `"true"` | no |
 | transit\_gateway\_description | Description of the Transit Gateway. | string | `""` | no |
 | transit\_gateway\_name\_suffix | Suffix of the name of the Transit Gateway. | string | `"transit-gateway"` | no |
-| transit\_gateway\_route\_cidrs | All the CIDRs for the Transit Gateway route table. Note that the VPCs CIDR (for the current VPC and the attached VPCs) will be automatically propagated via VPC attachement and thus should not be in this list. | list | `[]` | no |
-| transit\_gateway\_route\_cidrs\_count | How many transit_gateway_route_cidrs to add to the Transit Gateway route table. This value cannot be computed automatically from transit_gateway_route_cidrs in Terraform 0.11.X | string | `"0"` | no |
 | transit\_gateway\_subnet\_ids | Subnets to attached to the Transit Gateway. These subnets will be used internally by AWS to install the Transit Gateway. | list | `[]` | no |
 | transit\_gateway\_tags | Tags of the Transit Gateway. | map | `{}` | no |
 | vpc\_attachement\_create | Whether or not to create the Transit Gateway VPC attachment. | string | `"true"` | no |
@@ -47,6 +45,9 @@ For the following reasons:
 | vpn\_name\_suffix | Suffix of the name of the VPN Connections. | string | `"vpn"` | no |
 | vpn\_static\_routes\_options | List of: Whether the VPN connection uses static routes exclusively. Static routes must be used for devices that don't support BGP. | list | `[]` | no |
 | vpn\_tags | Tags of the VPN Connections. | map | `{}` | no |
+| vpn\_transit\_gateway\_route\_cidr\_indexes | List of VPN Connection index that connects vpn_transit_gateway_route_cidrs with the correct VPN. Tied with vpn_transit_gateway_route_cidrs, must have the same number of element. | list | `[]` | no |
+| vpn\_transit\_gateway\_route\_cidrs | List routes for the VPN attachement to bind to the Transit Gateway route table. Tied with vpn_transit_gateway_route_cidr_indexes, must have the same number of element. | list | `[]` | no |
+| vpn\_transit\_gateway\_route\_count | Count of routes for the VPN attachement to bind to the Transit Gateway route table. This value cannot be computed automatically from other variables in Terraform 0.11.X. | string | `"0"` | no |
 | vpn\_type | List of : The types of the VPN connections. The only type AWS supports at this time is 'ipsec.1'. | string | `"ipsec.1"` | no |
 
 ## Outputs
