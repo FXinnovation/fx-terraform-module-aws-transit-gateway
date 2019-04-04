@@ -1,3 +1,9 @@
+terraform {
+  required_providers = {
+    aws = ">= 2.4.0"
+  }
+}
+
 #####
 # Transit Gateway
 #####
@@ -16,7 +22,7 @@ resource "aws_ec2_transit_gateway" "this" {
 resource "aws_ec2_transit_gateway_route" "this" {
   count = "${var.transit_gateway_route_cidrs_count}"
 
-  destination_cidr_block         = "${element(var.transit_gateway_route_cidrs, count.index + 1)}"
+  destination_cidr_block         = "${element(var.transit_gateway_route_cidrs, count.index)}"
   transit_gateway_attachment_id  = "${aws_ec2_transit_gateway_vpc_attachment.this.id}"
   transit_gateway_route_table_id = "${element(concat(aws_ec2_transit_gateway.this.*.association_default_route_table_id, list("")), 0)}"
 }
