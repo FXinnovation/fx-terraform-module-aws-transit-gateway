@@ -63,6 +63,15 @@ resource "aws_vpn_connection" "this" {
   tags = "${merge(map("Name", format("%s-%s-%02d", var.name, var.vpn_name_suffix, count.index + 1)), var.tags, var.vpn_tags)}"
 }
 
+resource "aws_ec2_transit_gateway_vpn_attachment" "this" {
+  count = "${length(var.vpn_ips)}"
+
+  transit_gateway_id = "${aws_ec2_transit_gateway.this.id}"
+  vpn_connection_id  = "${element(aws_vpn_connection.example.*.id, count.index)}"
+
+  tags = "${merge(map("Name", format("%s-%s-%02d", var.name, var.vpn_attachment_name_suffix, count.index + 1)), var.tags, var.vpn_attachement_tags)}"
+}
+
 #####
 # Resource Share
 #####
