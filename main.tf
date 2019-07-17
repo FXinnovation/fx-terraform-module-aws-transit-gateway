@@ -84,7 +84,7 @@ resource "aws_ec2_transit_gateway_route" "this_vpn" {
 #####
 
 resource "aws_ram_resource_share" "this" {
-  count = "${var.resource_share_create ? 1 : 0}"
+  count = "${var.resource_share_create > 0 ? 1 : 0}"
 
   name                      = "${var.resource_share_name}"
   allow_external_principals = "${var.resource_share_allow_external_principals}"
@@ -93,14 +93,14 @@ resource "aws_ram_resource_share" "this" {
 }
 
 resource "aws_ram_principal_association" "this" {
-  count = "${var.resource_share_create ? var.resource_share_account_count : 0}"
+  count = "${var.resource_share_create > 0 ? var.resource_share_account_count : 0}"
 
   principal          = "${element(var.resource_share_account_ids, count.index)}"
   resource_share_arn = "${aws_ram_resource_share.this.id}"
 }
 
 resource "aws_ram_resource_association" "this" {
-  count = "${var.resource_share_create ? 1 : 0}"
+  count = "${var.resource_share_create > 0 ? 1 : 0}"
 
   resource_arn       = "${aws_ec2_transit_gateway.this.arn}"
   resource_share_arn = "${aws_ram_resource_share.this.id}"
