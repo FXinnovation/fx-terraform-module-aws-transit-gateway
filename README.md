@@ -19,6 +19,7 @@ For the following reasons:
 | customer\_gateway\_name\_suffix | Suffix of the name of the Customer Gateways. | string | `"customer-gateway"` | no |
 | customer\_gateway\_tags | Tags of the Customer Gateways. | map | `{}` | no |
 | name | Name prefix to be shared with all resources. | string | `"tgw"` | no |
+| resource\_share\_account\_count | How many account to be shared with the Transit Gateway resource share. This value cannot be computed automatically in Terraform 0.11. | string | `"1"` | no |
 | resource\_share\_account\_ids | Ids of the account where the Transit Gateway should be shared. | list | `[]` | no |
 | resource\_share\_allow\_external\_principals | Whether or not to allow external principals for the Resource Share for the Transit Gateway. | string | `"true"` | no |
 | resource\_share\_create | Whether or not to create a Resource Share for the Transit Gateway. This value cannot be computed automatically from other variables in Terraform 0.11.X. | string | `"false"` | no |

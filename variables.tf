@@ -186,6 +186,11 @@ variable "resource_share_create" {
   default     = false
 }
 
+variable "resource_share_account_count" {
+  description = "How many account to be shared with the Transit Gateway resource share. This value cannot be computed automatically in Terraform 0.11."
+  default     = 1
+}
+
 variable "resource_share_name" {
   description = "Name of the Resource Share for the Transit Gateway."
   default     = ""
