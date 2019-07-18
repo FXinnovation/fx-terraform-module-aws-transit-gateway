@@ -1,6 +1,6 @@
-# Standard Transit Gateway
+# Other VPC Attachment
 
-Creates a Transit Gateway with a Resource Share.
+Use an already existing Transit Gateway and attaches it to another VPC.
 
 ## Usage
 

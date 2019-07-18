@@ -1,8 +1,13 @@
 provider "aws" {
-  version    = "~> 2.4.0"
-  region     = "${var.region}"
+  version    = "~> 2.18.0"
+  region     = "us-east-1"
   access_key = "${var.access_key}"
   secret_key = "${var.secret_key}"
+
+  assume_role {
+    role_arn     = "arn:aws:iam::700633540182:role/OrganizationAccountAccessRole"
+    session_name = "TfTest"
+  }
 }
 
 data "aws_vpc" "default" {
@@ -20,15 +25,15 @@ data "aws_route_table" "selected" {
 module "with-vpn" {
   source = "../../"
 
-  name                        = "tftest"
-  transit_gateway_description = "Terraform test Transit Gateway"
-  transit_gateway_subnet_ids  = "${data.aws_subnet_ids.all.ids}"
-  vpc_id                      = "${data.aws_vpc.default.id}"
-  vpc_route_table_ids         = ["${data.aws_route_table.selected.id}"]
-  vpc_routes_update           = false
-  vpn_ips                     = ["172.0.0.1", "173.0.0.1"]
-  vpn_asns                    = [65000, 65000]
-  vpn_static_routes_options   = [false, true]
+  prefix                    = "tftest"
+  description               = "Terraform test Transit Gateway"
+  subnet_ids                = "${data.aws_subnet_ids.all.ids}"
+  vpc_id                    = "${data.aws_vpc.default.id}"
+  vpc_route_table_ids       = ["${data.aws_route_table.selected.id}"]
+  vpc_routes_update         = false
+  vpn_ips                   = ["172.0.0.1", "173.0.0.1"]
+  vpn_asns                  = [65000, 65000]
+  vpn_static_routes_options = [false, true]
 
   vpc_transit_gateway_route_count        = "1"
   vpc_transit_gateway_route_cidrs        = ["${data.aws_vpc.default.cidr_block}"]
