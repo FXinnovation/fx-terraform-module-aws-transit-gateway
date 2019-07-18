@@ -1,6 +1,6 @@
 variable "region" {
   description = "Region."
-  default     = "ca-central-1"
+  default     = "us-east-1"
 }
 
 variable "access_key" {
