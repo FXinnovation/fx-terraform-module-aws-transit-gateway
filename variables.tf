@@ -1,48 +1,59 @@
-variable "name" {
-  description = "Name prefix to be shared with all resources."
+#####
+# General
+#####
+
+variable "enable" {
+  description = "Whether or not to enable the entire module or not."
+  default     = true
+}
+
+variable "prefix" {
+  description = "Prefix to be shared with all resource’s names of the module."
   default     = "tgw"
 }
 
 variable "tags" {
-  description = "Tags to be shared with all resources."
+  description = "Tags to be shared with all resources of the module."
+  default     = {}
+}
 
-  default = {
-    Terraform = true
-  }
+variable "vpc_id" {
+  description = "Id of the VPC where to create the resources of the module."
+  default     = ""
 }
 
 #####
 # Transit Gateway
 #####
 
-variable "transit_gateway_create" {
-  description = "Whether or not to create the Transit Gateway."
-  default     = true
+variable "id" {
+  description = "ID of an existing transit gateway for attachement. If not specify, the module will create a new Transit Gateway (with var.tgw_create = true)."
+  default     = ""
 }
 
-variable "transit_gateway_description" {
+variable "description" {
   description = "Description of the Transit Gateway."
   default     = ""
 }
 
-variable "transit_gateway_name_suffix" {
+variable "name_suffix" {
   description = "Suffix of the name of the Transit Gateway."
   default     = "transit-gateway"
 }
 
-variable "transit_gateway_subnet_ids" {
+variable "subnet_ids" {
   description = "Subnets to attached to the Transit Gateway. These subnets will be used internally by AWS to install the Transit Gateway."
   default     = []
 }
 
-variable "transit_gateway_tags" {
-  description = "Tags of the Transit Gateway."
-  default     = {}
+variable "tgw_create" {
+  description = "Whether or not to create a Transit Gateway. This value cannot be computed automatically in Terraform 0.11."
+  default     = true
 }
 
-variable "vpc_id" {
-  description = "Id of the VPC where to create the Transit Gateway."
-  default     = ""
+variable "tgw_tags" {
+  description = "Tags specific of the Transit Gateway. Will be merged with var.tags."
+  default     = {}
 }
 
 #####

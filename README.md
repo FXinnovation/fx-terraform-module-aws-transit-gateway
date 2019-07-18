@@ -18,7 +18,11 @@ For the following reasons:
 |------|-------------|:----:|:-----:|:-----:|
 | customer\_gateway\_name\_suffix | Suffix of the name of the Customer Gateways. | string | `"customer-gateway"` | no |
 | customer\_gateway\_tags | Tags of the Customer Gateways. | map | `{}` | no |
-| name | Name prefix to be shared with all resources. | string | `"tgw"` | no |
+| description | Description of the Transit Gateway. | string | `""` | no |
+| enable | Whether or not to enable the entire module or not. | string | `"true"` | no |
+| id | ID of an existing transit gateway for attachement. If not specify, the module will create a new Transit Gateway (with var.tgw_create = true). | string | `""` | no |
+| name\_suffix | Suffix of the name of the Transit Gateway. | string | `"transit-gateway"` | no |
+| prefix | Prefix to be shared with all resource’s names of the module. | string | `"tgw"` | no |
 | resource\_share\_account\_count | How many account to be shared with the Transit Gateway resource share. This value cannot be computed automatically in Terraform 0.11. | string | `"1"` | no |
 | resource\_share\_account\_ids | Ids of the account where the Transit Gateway should be shared. | list | `[]` | no |
 | resource\_share\_allow\_external\_principals | Whether or not to allow external principals for the Resource Share for the Transit Gateway. | string | `"true"` | no |
@@ -28,16 +32,14 @@ For the following reasons:
 | resource\_share\_tags | Tags of the Resource Share for the Transit Gateway. | map | `{}` | no |
 | route\_attached\_vpc\_cidrs | All the CIDRs of the attached VPCs to the Transit Gateway. These routes will be used to update the current VPC route tables, not the Transit Gateway route table itself. Note: the default value solves the Terraform variable preprocessing in 0.11.X, preventing conditions to work correctly when this variable is an empty list. To make sure routes are not updated with this dummy value, set vpc_routes_update=false. | list | `[ "127.0.0.1/32" ]` | no |
 | route\_attached\_vpn\_cidrs | All the CIDRs of the attached VPNs to the Transit Gateway. These routes will be used to update the current VPC route tables, not the Transit Gateway route table itself. Note: the default value solves the Terraform variable preprocessing in 0.11.X, preventing conditions to work correctly when this variable is an empty list. To make sure routes are not updated with this dummy value, set vpc_routes_update=false. | list | `[ "127.0.0.1/32" ]` | no |
-| tags | Tags to be shared with all resources. | map | `{ "Terraform": true }` | no |
-| transit\_gateway\_create | Whether or not to create the Transit Gateway. | string | `"true"` | no |
-| transit\_gateway\_description | Description of the Transit Gateway. | string | `""` | no |
-| transit\_gateway\_name\_suffix | Suffix of the name of the Transit Gateway. | string | `"transit-gateway"` | no |
-| transit\_gateway\_subnet\_ids | Subnets to attached to the Transit Gateway. These subnets will be used internally by AWS to install the Transit Gateway. | list | `[]` | no |
-| transit\_gateway\_tags | Tags of the Transit Gateway. | map | `{}` | no |
+| subnet\_ids | Subnets to attached to the Transit Gateway. These subnets will be used internally by AWS to install the Transit Gateway. | list | `[]` | no |
+| tags | Tags to be shared with all resources of the module. | map | `{}` | no |
+| tgw\_create | Whether or not to create a Transit Gateway. This value cannot be computed automatically in Terraform 0.11. | string | `"true"` | no |
+| tgw\_tags | Tags specific of the Transit Gateway. Will be merged with var.tags. | map | `{}` | no |
 | vpc\_attachement\_create | Whether or not to create the Transit Gateway VPC attachment. | string | `"true"` | no |
 | vpc\_attachement\_tags | Tags of the VPC attachement of the Transit Gateway. | map | `{}` | no |
 | vpc\_attachment\_name\_suffix | Suffix of the name of the VPC attachements. | string | `"attachement"` | no |
-| vpc\_id | Id of the VPC where to create the Transit Gateway. | string | `""` | no |
+| vpc\_id | Id of the VPC where to create the resources of the module. | string | `""` | no |
 | vpc\_route\_table\_count | The count of all the route tables of the current VPC that should be aware of the sub accounts/VPN attached to the Transit Gateway. This value cannot be computed automatically from vpc_route_table_ids in Terraform 0.11.X. | string | `"0"` | no |
 | vpc\_route\_table\_ids | All the route tables of the current VPC that should be aware of the sub accounts VPCs or VPNs attached to the Transit Gateway. They will be updated with  with route_attached_vpn_cidrs and route_attached_vpc_cidrs. | list | `[]` | no |
 | vpc\_routes\_update | Whether or not to update VPC route tables with route_attached_vpn_cidrs and route_attached_vpc_cidrs. This value cannot be computed automatically from other variables in Terraform 0.11.X. | string | `"true"` | no |
