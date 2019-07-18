@@ -1,8 +1,14 @@
 provider "aws" {
-  version    = "~> 2.4.0"
+  version    = "~> 2.18.0"
   region     = "${var.region}"
   access_key = "${var.access_key}"
   secret_key = "${var.secret_key}"
+}
+
+resource "random_string" "this" {
+  length  = 8
+  upper   = false
+  special = false
 }
 
 data "aws_vpc" "default" {
@@ -20,16 +26,17 @@ data "aws_route_table" "selected" {
 module "standard" {
   source = "../../"
 
-  name                        = "tftest"
-  transit_gateway_description = "Terraform test Transit Gateway"
-  transit_gateway_subnet_ids  = "${data.aws_subnet_ids.all.ids}"
-  vpc_id                      = "${data.aws_vpc.default.id}"
-  vpc_route_table_ids         = ["${data.aws_route_table.selected.id}"]
-  vpc_routes_update           = false
+  vpc_id = "${data.aws_vpc.default.id}"
 
   tags = {
     Terraform = "test"
   }
+
+  prefix              = "tftest${random_string.this.result}TGW"
+  description         = "Terraform test Transit Gateway"
+  subnet_ids          = "${data.aws_subnet_ids.all.ids}"
+  vpc_route_table_ids = ["${data.aws_route_table.selected.id}"]
+  vpc_routes_update   = false
 
   vpc_attachement_tags = {
     foo = "bar"
