@@ -136,7 +136,7 @@ resource "aws_ram_resource_association" "this" {
 #####
 
 resource "aws_route" "this_vpc_routes" {
-  count = "${var.enable && var.vpc_routes_update ? var.vpc_route_table_count * length(var.route_attached_vpc_cidrs) : 0}"
+  count = "${var.enable && var.vpc_routes_update ? var.vpc_route_table_count * var.route_attached_vpc_cidrs_count : 0}"
 
   route_table_id         = "${element(var.vpc_route_table_ids, count.index / length(var.route_attached_vpc_cidrs))}"
   destination_cidr_block = "${element(var.route_attached_vpc_cidrs, count.index % length(var.route_attached_vpc_cidrs))}"
@@ -146,7 +146,7 @@ resource "aws_route" "this_vpc_routes" {
 }
 
 resource "aws_route" "this_vpn_routes" {
-  count = "${var.enable && var.vpc_routes_update ? var.vpc_route_table_count * length(var.route_attached_vpn_cidrs) : 0}"
+  count = "${var.enable && var.vpc_routes_update ? var.vpc_route_table_count * var.route_attached_vpn_cidrs_count : 0}"
 
   route_table_id         = "${element(var.vpc_route_table_ids, count.index / length(var.route_attached_vpn_cidrs))}"
   destination_cidr_block = "${element(var.route_attached_vpn_cidrs, count.index % length(var.route_attached_vpn_cidrs))}"
