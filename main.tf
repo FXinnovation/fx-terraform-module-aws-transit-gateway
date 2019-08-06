@@ -142,7 +142,7 @@ resource "aws_route" "this_vpc_routes" {
   destination_cidr_block = "${element(var.route_attached_vpc_cidrs, count.index % length(var.route_attached_vpc_cidrs))}"
   transit_gateway_id     = "${element(concat(data.aws_ec2_transit_gateway.this.*.id, list("")), 0)}"
 
-  depends_on = ["aws_ec2_transit_gateway.this"]
+  depends_on = ["aws_ec2_transit_gateway.this", "aws_ec2_transit_gateway_vpc_attachment.this"]
 }
 
 resource "aws_route" "this_vpn_routes" {
@@ -152,5 +152,5 @@ resource "aws_route" "this_vpn_routes" {
   destination_cidr_block = "${element(var.route_attached_vpn_cidrs, count.index % length(var.route_attached_vpn_cidrs))}"
   transit_gateway_id     = "${element(concat(data.aws_ec2_transit_gateway.this.*.id, list("")), 0)}"
 
-  depends_on = ["aws_ec2_transit_gateway.this"]
+  depends_on = ["aws_ec2_transit_gateway.this", "aws_vpn_connection.this"]
 }
