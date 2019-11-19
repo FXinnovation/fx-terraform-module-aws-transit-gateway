@@ -87,6 +87,10 @@ resource "aws_vpn_connection" "this" {
     var.tags,
     var.vpn_tags
   )}"
+
+  lifecycle {
+    ignore_changes = ["transit_gateway_id"]
+  }
 }
 
 resource "aws_ec2_transit_gateway_route" "this_vpn" {
