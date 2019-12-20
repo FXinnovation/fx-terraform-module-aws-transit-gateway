@@ -124,7 +124,7 @@ resource "aws_vpn_connection" "this" {
 }
 
 resource "aws_ec2_transit_gateway_route" "this_vpn" {
-  count = var.enable ? length(var.vpn_transit_gateway_route) : 0
+  count = var.enable ? length(var.vpn_transit_gateway_route_cidrs) : 0
 
   destination_cidr_block = element(var.vpn_transit_gateway_route_cidrs, count.index)
   transit_gateway_attachment_id = element(
@@ -173,7 +173,7 @@ resource "aws_ram_resource_share" "this" {
 }
 
 resource "aws_ram_principal_association" "this" {
-  count = var.enable && var.resource_share_create > 0 ? length(var.resource_share_account) : 0
+  count = var.enable && var.resource_share_create > 0 ? length(var.resource_share_account_ids) : 0
 
   principal          = element(var.resource_share_account_ids, count.index)
   resource_share_arn = aws_ram_resource_share.this[0].id
@@ -191,7 +191,7 @@ resource "aws_ram_resource_association" "this" {
 #####
 
 resource "aws_route" "this_vpc_routes" {
-  count = var.enable && var.vpc_routes_update ? length(var.vpc_route_table) * length(var.route_attached_vpc_cidrs) : 0
+  count = var.enable && var.vpc_routes_update ? length(var.vpc_route_table_ids) * length(var.route_attached_vpc_cidrs) : 0
 
   route_table_id = element(
     var.vpc_route_table_ids,
@@ -210,7 +210,7 @@ resource "aws_route" "this_vpc_routes" {
 }
 
 resource "aws_route" "this_vpn_routes" {
-  count = var.enable && var.vpc_routes_update ? length(var.vpc_route_table) * length(var.route_attached_vpn_cidrs) : 0
+  count = var.enable && var.vpc_routes_update ? length(var.vpc_route_table_ids) * length(var.route_attached_vpn_cidrs) : 0
 
   route_table_id = element(
     var.vpc_route_table_ids,
