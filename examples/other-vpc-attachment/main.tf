@@ -1,8 +1,8 @@
 provider "aws" {
-  version    = "~> 2.18.0"
+  version    = "~> 2.18"
   region     = "us-east-1"
-  access_key = "${var.access_key}"
-  secret_key = "${var.secret_key}"
+  access_key = var.access_key
+  secret_key = var.secret_key
 
   assume_role {
     role_arn     = "arn:aws:iam::700633540182:role/OrganizationAccountAccessRole"
@@ -26,25 +26,25 @@ data "aws_vpc" "default" {
 }
 
 data "aws_subnet_ids" "all" {
-  vpc_id = "${data.aws_vpc.default.id}"
+  vpc_id = data.aws_vpc.default.id
 }
 
 resource "aws_vpc" "main" {
-  cidr_block = "${format("10.%s.0.0/16", random_integer.this.result)}"
+  cidr_block = format("10.%s.0.0/16", random_integer.this.result)
 }
 
 resource "aws_subnet" "main_sub1" {
-  vpc_id     = "${aws_vpc.main.id}"
-  cidr_block = "${format("10.%s.0.0/20", random_integer.this.result)}"
+  vpc_id     = aws_vpc.main.id
+  cidr_block = format("10.%s.0.0/20", random_integer.this.result)
 }
 
 resource "aws_subnet" "main_sub2" {
-  vpc_id     = "${aws_vpc.main.id}"
-  cidr_block = "${format("10.%s.16.0/20", random_integer.this.result)}"
+  vpc_id     = aws_vpc.main.id
+  cidr_block = format("10.%s.16.0/20", random_integer.this.result)
 }
 
 data "aws_route_table" "selected" {
-  vpc_id = "${data.aws_vpc.default.id}"
+  vpc_id = data.aws_vpc.default.id
 }
 
 module "standard" {
@@ -52,9 +52,9 @@ module "standard" {
 
   prefix              = "tftest${random_string.this.result}TGW"
   description         = "Terraform test Transit Gateway"
-  subnet_ids          = "${data.aws_subnet_ids.all.ids}"
-  vpc_id              = "${data.aws_vpc.default.id}"
-  vpc_route_table_ids = ["${data.aws_route_table.selected.id}"]
+  subnet_ids          = data.aws_subnet_ids.all.ids
+  vpc_id              = data.aws_vpc.default.id
+  vpc_route_table_ids = [data.aws_route_table.selected.id]
   vpc_routes_update   = false
 
   tags = {
@@ -67,9 +67,9 @@ module "standard" {
 module "other_vpc_attachement" {
   source = "../../"
 
-  id         = "${module.standard.id}"
-  vpc_id     = "${aws_vpc.main.id}"
-  subnet_ids = ["${aws_subnet.main_sub1.id}", "${aws_subnet.main_sub2.id}"]
+  id         = module.standard.id
+  vpc_id     = aws_vpc.main.id
+  subnet_ids = [aws_subnet.main_sub1.id, aws_subnet.main_sub2.id]
 
   tgw_create             = false
   vpc_attachement_create = true
