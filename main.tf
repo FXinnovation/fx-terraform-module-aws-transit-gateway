@@ -195,7 +195,7 @@ resource "aws_route" "this_vpc_routes" {
 
   route_table_id = element(
     var.vpc_route_table_ids,
-    count.index / length(var.route_attached_vpc_cidrs),
+    floor(count.index / length(var.route_attached_vpc_cidrs)),
   )
   destination_cidr_block = element(
     var.route_attached_vpc_cidrs,
@@ -214,7 +214,7 @@ resource "aws_route" "this_vpn_routes" {
 
   route_table_id = element(
     var.vpc_route_table_ids,
-    count.index / length(var.route_attached_vpn_cidrs),
+    floor(count.index / length(var.route_attached_vpn_cidrs)),
   )
   destination_cidr_block = element(
     var.route_attached_vpn_cidrs,
