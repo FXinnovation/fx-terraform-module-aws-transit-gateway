@@ -15,23 +15,30 @@ $ terraform apply
 Note that this example may create resources which can cost money (AWS Elastic IP, for example). Run `terraform destroy` when you don't need these resources.
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+## Providers
+
+| Name | Version |
+|------|---------|
+| aws | ~> 2.18 |
+| random | n/a |
+
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|:----:|:-----:|:-----:|
-| access\_key |  | string | n/a | yes |
-| secret\_key |  | string | n/a | yes |
+|------|-------------|------|---------|:-----:|
+| access\_key | n/a | `any` | n/a | yes |
+| secret\_key | n/a | `any` | n/a | yes |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| arn |  |
-| association\_default\_route\_table\_id |  |
-| id |  |
-| owner\_id |  |
-| propagation\_default\_route\_table\_id |  |
-| resource\_share\_id |  |
-| vpc\_attachment\_id |  |
+| arn | n/a |
+| association\_default\_route\_table\_id | n/a |
+| id | n/a |
+| owner\_id | n/a |
+| propagation\_default\_route\_table\_id | n/a |
+| resource\_share\_id | n/a |
+| vpc\_attachment\_id | n/a |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

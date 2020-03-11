@@ -10,6 +10,8 @@ resource "aws_ec2_transit_gateway" "this" {
   default_route_table_association = "enable"
   default_route_table_propagation = "enable"
 
+  amazon_side_asn = var.amazon_side_asn
+
   tags = merge(
     {
       "Name" = format("%s-%s-%02d", var.prefix, var.name_suffix, count.index + 1)

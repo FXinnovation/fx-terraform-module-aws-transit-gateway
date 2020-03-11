@@ -29,18 +29,24 @@ data "aws_subnet_ids" "all" {
   vpc_id = data.aws_vpc.default.id
 }
 
+data "aws_availability_zones" "available" {
+  state = "available"
+}
+
 resource "aws_vpc" "main" {
   cidr_block = format("10.%s.0.0/16", random_integer.this.result)
 }
 
 resource "aws_subnet" "main_sub1" {
-  vpc_id     = aws_vpc.main.id
-  cidr_block = format("10.%s.0.0/20", random_integer.this.result)
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = format("10.%s.0.0/20", random_integer.this.result)
+  availability_zone = element(tolist(data.aws_availability_zones.available.names), 0)
 }
 
 resource "aws_subnet" "main_sub2" {
-  vpc_id     = aws_vpc.main.id
-  cidr_block = format("10.%s.16.0/20", random_integer.this.result)
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = format("10.%s.16.0/20", random_integer.this.result)
+  availability_zone = element(tolist(data.aws_availability_zones.available.names), 1)
 }
 
 data "aws_route_table" "selected" {
@@ -50,9 +56,11 @@ data "aws_route_table" "selected" {
 module "standard" {
   source = "../../"
 
-  prefix              = "tftest${random_string.this.result}TGW"
-  description         = "Terraform test Transit Gateway"
-  subnet_ids          = data.aws_subnet_ids.all.ids
+  prefix          = "tftest${random_string.this.result}TGW"
+  description     = "Terraform test Transit Gateway"
+  subnet_ids      = data.aws_subnet_ids.all.ids
+  amazon_side_asn = "64513"
+
   vpc_id              = data.aws_vpc.default.id
   vpc_route_table_ids = [data.aws_route_table.selected.id]
   vpc_routes_update   = false
