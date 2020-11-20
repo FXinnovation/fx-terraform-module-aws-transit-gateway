@@ -12,6 +12,14 @@ For the following reasons:
 - With terraform 0.11.X, VPC attachment in client accounts is not idempotent and will raise an error on subsequent calls.
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+## Requirements
+
+| Name | Version |
+|------|---------|
+| terraform | >= 0.12 |
+| aws | >= 2.18.0 |
+| random | >= 2.0.0 |
+
 ## Providers
 
 | Name | Version |
@@ -21,7 +29,7 @@ For the following reasons:
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:-----:|
+|------|-------------|------|---------|:--------:|
 | amazon\_side\_asn | Private Autonomous System Number (ASN) for the Amazon side of a BGP session. The range is 64512 to 65534 for 16-bit ASNs and 4200000000 to 4294967294 for 32-bit ASNs. | `number` | `64512` | no |
 | customer\_gateway\_name\_suffix | Suffix of the name of the Customer Gateways. | `string` | `"customer-gateway"` | no |
 | customer\_gateway\_tags | Tags of the Customer Gateways. | `map` | `{}` | no |

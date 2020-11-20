@@ -1,5 +1,9 @@
 # Changelog
 
+## x.x.x (unreleased)
+
+* chore: bump pre-commit hooks to fix jenkins test
+
 ## 1.1.0
 
 * feat: Add custom transit gateway ASN id
