@@ -22,6 +22,7 @@ variable "vpc_id" {
   default     = ""
 }
 
+
 #####
 # Transit Gateway
 #####
@@ -61,6 +62,7 @@ variable "tgw_tags" {
   default     = {}
 }
 
+
 #####
 # Routes
 #####
@@ -84,6 +86,7 @@ variable "route_attached_vpn_cidrs" {
   description = "All the CIDRs of the attached VPNs to the Transit Gateway. These routes will be used to update the current VPC route tables, not the Transit Gateway route table itself. Note: the default value solves the Terraform variable preprocessing in 0.11.X, preventing conditions to work correctly when this variable is an empty list. To make sure routes are not updated with this dummy value, set vpc_routes_update=false."
   default     = ["127.0.0.1/32"]
 }
+
 
 #####
 # VPC Attachement
@@ -113,6 +116,7 @@ variable "vpc_transit_gateway_route_cidrs" {
   description = "List routes for the VPC attachement to bind to the Transit Gateway route table. Tied with vpc_transit_gateway_route_cidr_indexes, must have the same number of element."
   default     = []
 }
+
 
 #####
 # VPN Attachement
@@ -167,6 +171,7 @@ variable "vpn_transit_gateway_route_cidrs" {
   description = "List routes for the VPN attachement to bind to the Transit Gateway route table. Tied with vpn_transit_gateway_route_cidr_indexes, must have the same number of element."
   default     = []
 }
+
 
 #####
 # Resource Share

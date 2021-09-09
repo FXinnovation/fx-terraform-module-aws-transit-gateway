@@ -1,4 +1,4 @@
-# Module AWS Transit Gateway
+# terraform-module-aws-transit-gateway
 
 Creates a Transit Gateway.
 

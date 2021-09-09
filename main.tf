@@ -24,6 +24,7 @@ resource "aws_ec2_transit_gateway" "this" {
   )
 }
 
+
 #####
 # VPC Attachements
 #####
@@ -71,6 +72,7 @@ resource "aws_ec2_transit_gateway_route" "this_vpc" {
     0,
   )
 }
+
 
 #####
 # VPN Attachements
@@ -147,6 +149,7 @@ resource "aws_ec2_transit_gateway_route" "this_vpn" {
   depends_on = [aws_ec2_transit_gateway.this]
 }
 
+
 #####
 # Resource Share
 #####
@@ -187,6 +190,7 @@ resource "aws_ram_resource_association" "this" {
   resource_arn       = element(concat(data.aws_ec2_transit_gateway.this.*.arn, [""]), 0)
   resource_share_arn = aws_ram_resource_share.this[0].id
 }
+
 
 #####
 # Routes
